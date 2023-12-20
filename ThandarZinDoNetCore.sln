@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Document", "Document", "{53
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThandarZinDoNetCore.RestApi", "ThandarZinDoNetCore.RestApi\ThandarZinDoNetCore.RestApi.csproj", "{CADCAD6A-7144-4DB2-806A-CCD340745C99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{F3DDD69C-23BB-47A7-B072-7FC1C67A5681}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3DDD69C-23BB-47A7-B072-7FC1C67A5681}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3DDD69C-23BB-47A7-B072-7FC1C67A5681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CADCAD6A-7144-4DB2-806A-CCD340745C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CADCAD6A-7144-4DB2-806A-CCD340745C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CADCAD6A-7144-4DB2-806A-CCD340745C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CADCAD6A-7144-4DB2-806A-CCD340745C99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
