@@ -29,8 +29,8 @@ public class DapperExampler
 			//Creat("Thhh", "ggg", "dddd");
 			//Creat("Thhh", "ggg", "dddd");
 			//Edit(10);
-			//Delete(10);
-			Update(6, "thu", "jkl", "yui");
+			Delete(31);
+			//Update(34, "Ath", "TUY", "JHG");
 		}
 
 		public void Read()
@@ -81,15 +81,11 @@ public class DapperExampler
 		}
 		private void Update(int id, string title, string author, string content)
 		{
-			string query = @"INSERT INTO [dbo].[Tbl_Blog]
-							   ([Blog_Title]
-							   ,[Blog_Author]
-							   ,[Blog_Content])
-						 VALUES
-							   (@Blog_Title
-							   ,@Blog_Author
-							   ,@Blog_Content)";
-
+			string query = @"UPDATE [dbo].[Tbl_Blog]
+							   SET [Blog_Title] = @Blog_Title
+								  ,[Blog_Author] = @Blog_Author
+								  ,[Blog_Content] = @Blog_Content
+							 WHERE Blog_Id = @Blog_Id";
 			BlogDataModel blog = new BlogDataModel()
 			{
 				Blog_Id = id,
@@ -97,12 +93,9 @@ public class DapperExampler
 				Blog_Author = author,
 				Blog_Content = content
 			};
-
-
-		
+					
 			using IDbConnection db = new SqlConnection(_sqlConnectionStringBuilder.ConnectionString);
 			int result = db.Execute(query, blog);
-
 			string message = result > 0 ? "Updating Successful." : "Updating Failed.";
 			Console.WriteLine(message);
 		}
