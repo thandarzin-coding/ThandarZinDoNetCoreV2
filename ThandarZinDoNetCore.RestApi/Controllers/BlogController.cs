@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ThandarZinDoNetCore.RestApi;
+using ThandarZinDoNetCore.RestApi.EfCoreExamples;
 
 namespace ThandarZinDoNetCore.RestApi.Controllers
 {
@@ -9,11 +10,13 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
 	[ApiController]
 	public class BlogController : ControllerBase
 	{
+		private readonly AppDbContext _dbContext = new AppDbContext();
 
-		[HttpGet]
+        [HttpGet]
 		public IActionResult GetBlogs()
 		{
-			return Ok("Get");
+			var lst = _dbContext.Blogs.ToList();
+			return Ok(lst);
 		}
 
 		[HttpPost]
