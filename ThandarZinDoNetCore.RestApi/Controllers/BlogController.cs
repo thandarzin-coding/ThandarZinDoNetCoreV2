@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ThandarZinDoNetCore.RestApi;
 using ThandarZinDoNetCore.RestApi.EfCoreExamples;
+using ThandarZinDoNetCore.RestApi.Models;
 
 namespace ThandarZinDoNetCore.RestApi.Controllers
 {
@@ -48,16 +49,38 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
             });
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetBlog(int id)
+        {
+            var lst = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            if(lst is null)
+            {
+                return NotFound("No Data Found");
+            }
+            return Ok(lst);
+
+        }
+
         [HttpPost]
-		public IActionResult CreateBlogs()
+		public IActionResult CreateBlogs(BlogDataModel blogDataModel)
 		{
-			return Ok("Post");
+             _dbContext.Blogs.Add(blogDataModel);
+             int result =  _dbContext.SaveChanges();
+             string message = result > 0 ? "Saving Successfully" : "Save Faild";
+             return Ok(message);
+
+            
 		}
 
-		[HttpPut]
-		public IActionResult UpdateBlogs()
+		[HttpPut("{id}")]
+		public IActionResult UpdateBlogs(int id , BlogDataModel blog)
 		{
-			return Ok("Put");
+            var item = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            if(item is null)
+            {
+                return NotFound("No Data Found");
+            }
+			return Ok(item);
 		}
 
 		[HttpPatch]
@@ -66,10 +89,19 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
 			return Ok("Patch");
 		}
 
-		[HttpDelete]
-		public IActionResult DeleteBlogs()
+		[HttpDelete("{id}")]
+		public IActionResult DeleteBlogs(int id)
 		{
-			return Ok("Delete");
-		}
+            var item = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
+            if (item is null)
+            {
+                return NotFound("No data found.");
+            }
+            _dbContext.Blogs.Remove(item);
+            int result = _dbContext.SaveChanges();
+            string message = result > 0 ? "Deleting Successful." : "Deleting Failed.";
+
+            return Ok(message);
+        }
 	}
 }
