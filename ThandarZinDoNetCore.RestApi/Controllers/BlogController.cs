@@ -6,20 +6,20 @@ using ThandarZinDoNetCore.RestApi.Models;
 
 namespace ThandarZinDoNetCore.RestApi.Controllers
 {
-	//https://localhost:3000/api/blog
-	[Route("api/[controller]")]
-	[ApiController]
-	public class BlogController : ControllerBase
-	{
-		private readonly AppDbContext _dbContext = new AppDbContext();
+    //https://localhost:3000/api/blog
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BlogController : ControllerBase
+    {
+        private readonly AppDbContext _dbContext = new AppDbContext();
 
-		[HttpGet]
-		public IActionResult GetBlogs()
-		{
-			var lst = _dbContext.Blogs.ToList();
-			return Ok(lst);
+        [HttpGet]
+        public IActionResult GetBlogs()
+        {
+            var lst = _dbContext.Blogs.ToList();
+            return Ok(lst);
 
-		}
+        }
 
         [HttpGet("{pageNo}/{pageSize}")]
         public IActionResult GetBlogs(int pageNo, int pageSize)
@@ -53,7 +53,7 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
         public IActionResult GetBlog(int id)
         {
             var lst = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
-            if(lst is null)
+            if (lst is null)
             {
                 return NotFound("No Data Found");
             }
@@ -62,21 +62,21 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
         }
 
         [HttpPost]
-		public IActionResult CreateBlogs(BlogDataModel blogDataModel)
-		{
-             _dbContext.Blogs.Add(blogDataModel);
-             int result =  _dbContext.SaveChanges();
-             string message = result > 0 ? "Saving Successfully" : "Save Faild";
-             return Ok(message);
+        public IActionResult CreateBlogs(BlogDataModel blogDataModel)
+        {
+            _dbContext.Blogs.Add(blogDataModel);
+            int result = _dbContext.SaveChanges();
+            string message = result > 0 ? "Saving Successfully" : "Save Faild";
+            return Ok(message);
 
-            
-		}
 
-		[HttpPut("{id}")]
-		public IActionResult UpdateBlogs(int id , BlogDataModel blog)
-		{
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateBlogs(int id, BlogDataModel blog)
+        {
             var item = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
-            if(item is null)
+            if (item is null)
             {
                 return NotFound("No Data Found");
             }
@@ -133,8 +133,8 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
         }
 
         [HttpDelete("{id}")]
-		public IActionResult DeleteBlogs(int id)
-		{
+        public IActionResult DeleteBlogs(int id)
+        {
             var item = _dbContext.Blogs.FirstOrDefault(x => x.Blog_Id == id);
             if (item is null)
             {
@@ -146,5 +146,5 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
 
             return Ok(message);
         }
-	}
+    }
 }
