@@ -153,28 +153,70 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
             SqlConnection connection = new SqlConnection(_sqlConnectionStringBuilder.ConnectionString);
             connection.Open();
 
-            string query = @"UPDATE [dbo].[Tbl_Blog]
-							   SET [Blog_Title] = @Blog_Title
-								  ,[Blog_Author] = @Blog_Author
-								  ,[Blog_Content] = @Blog_Content
-							 WHERE Blog_Id = @Blog_Id";
+            string query = @"SELECT [Blog_Id]
+                            ,[Blog_Title]
+                            ,[Blog_Author]
+                            ,[Blog_Content]
+                            FROM [dbo].[Tbl_Blog] where Blog_Id = @Blog_Id ";
 
-            BlogDataModel model = new BlogDataModel()
-            {
-                Blog_Id = id
-            };
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@Blog_Id", id);
-            command.Parameters.AddWithValue("@Blog_Title", blog.Blog_Title);
-            command.Parameters.AddWithValue("@Blog_Content", blog.Blog_Content);
-            command.Parameters.AddWithValue("@Blog_Author", blog.Blog_Author);
-            var result = command.ExecuteNonQuery();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(command);
+            DataTable dt = new DataTable();
+            sqlDataAdapter.Fill(dt);
+
             connection.Close();
 
 
-            string message = result > 0 ? " Updated successfully" : "Updateed Faild";
+            string conditions = string.Empty;
+
+            if (!string.IsNullOrEmpty(blog.Blog_Title))
+            {
+                conditions += @" [Blog_Title] = @Blog_Title, ";
+            }
+            if (!string.IsNullOrEmpty(blog.Blog_Author))
+            {
+                conditions += @" [Blog_Author] = @Blog_Author, ";
+            }
+            if (!string.IsNullOrEmpty(blog.Blog_Content))
+            {
+                conditions += @" [Blog_Content] = @Blog_Content, ";
+            }
+            if (conditions.Length == 0)
+            {
+                return BadRequest("Invalid Request.");
+            }
+            conditions = conditions.Substring(0, conditions.Length - 2);
+
+            blog.Blog_Id = id;
+
+            string queryUpdate = $@"UPDATE [dbo].[Tbl_Blog]
+                               SET {conditions}
+                             WHERE Blog_Id = @Blog_Id";
+
+            connection.Open();
+            SqlCommand cmdUpdate = new SqlCommand(queryUpdate, connection);
+            cmdUpdate.Parameters.AddWithValue("@Blog_Id", id);
+            if (!string.IsNullOrEmpty(blog.Blog_Title))
+            {
+                cmdUpdate.Parameters.AddWithValue("@Blog_Title", blog.Blog_Title);
+            }
+            if (!string.IsNullOrEmpty(blog.Blog_Author))
+            {
+                cmdUpdate.Parameters.AddWithValue("@Blog_Author", blog.Blog_Author);
+            }
+            if (!string.IsNullOrEmpty(blog.Blog_Content))
+            {
+                cmdUpdate.Parameters.AddWithValue("@Blog_Content", blog.Blog_Content);
+            }
+
+            var result = command.ExecuteNonQuery();
+            connection.Close();
+
+            string message = result > 0 ? "Update successfully" : " Faild";
             return Ok(message);
+
         }
     }
 }
