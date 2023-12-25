@@ -53,7 +53,7 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetBlog(int Id)
+        public IActionResult GetBlog(int id)
         {
             SqlConnection connection = new SqlConnection(_sqlConnectionStringBuilder.ConnectionString);
             connection.Open();
@@ -64,7 +64,7 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
                             ,[Blog_Content]
                             FROM [dbo].[Tbl_Blog] where Blog_Id = @Blog_Id ";
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@Blog_Id", Id);
+            command.Parameters.AddWithValue("@Blog_Id", id);
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(command);
             DataTable dt = new DataTable();
             sqlDataAdapter.Fill(dt);
