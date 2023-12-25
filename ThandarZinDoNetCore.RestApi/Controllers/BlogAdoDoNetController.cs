@@ -211,7 +211,7 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
                 cmdUpdate.Parameters.AddWithValue("@Blog_Content", blog.Blog_Content);
             }
 
-            var result = command.ExecuteNonQuery();
+            var result = cmdUpdate.ExecuteNonQuery();
             connection.Close();
 
             string message = result > 0 ? "Update successfully" : " Faild";
