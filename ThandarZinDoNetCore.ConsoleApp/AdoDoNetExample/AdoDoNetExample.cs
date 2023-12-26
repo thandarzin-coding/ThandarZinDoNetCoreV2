@@ -5,7 +5,6 @@ namespace ThandarZinDoNetCore.ConsoleApp.AdoDoNetExample
 {
 	public class AdoDoNetExample
 	{
-
 		public void Run()
 		{
 
@@ -124,14 +123,11 @@ namespace ThandarZinDoNetCore.ConsoleApp.AdoDoNetExample
 			command.Parameters.AddWithValue("@Blog_Author", Author);
 			var result = command.ExecuteNonQuery();
 			connection.Close();
-
-
 			string message = result > 0 ? " Saving Successfully " : "Saving Faild";
 			Console.WriteLine(message);
 
-
 		}
-	
+
 		public void Delete(int Id)
 		{
 			SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder()
@@ -152,12 +148,12 @@ namespace ThandarZinDoNetCore.ConsoleApp.AdoDoNetExample
 			command.Parameters.AddWithValue("@Blog_Id", Id);
 			var result = command.ExecuteNonQuery();
 			connection.Close();
-
 			string message = result > 0 ? "Deleted successfully" : "Delete Faild";
 			Console.WriteLine(message);
 
 
 		}
+
 		private void Update(int id, string title, string author, string content)
 		{
 			SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder()
@@ -185,13 +181,12 @@ namespace ThandarZinDoNetCore.ConsoleApp.AdoDoNetExample
 			command.Parameters.AddWithValue("@Blog_Author", content);
 			var result = command.ExecuteNonQuery();
 			connection.Close();
-
-
 			string message = result > 0 ? " Updated successfully" : "Updateed Faild";
 			Console.WriteLine(message);
 
 
 		}
+
 
 	}
 }

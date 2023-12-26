@@ -168,6 +168,10 @@ namespace ThandarZinDoNetCore.RestApi.Controllers
 
             connection.Close();
 
+            if (dt is null)
+            {
+                return NotFound("No data found.");
+            }
 
             string conditions = string.Empty;
 
